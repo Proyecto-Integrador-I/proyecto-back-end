@@ -4,14 +4,14 @@ pipeline {
     agent any
     
     stages {
-        stage('Instalacion y compilacion') {
+        stage('Instalación y compilación') {
             steps {
 				withMaven(maven : 'maven-3.6.3'){
 					bat 'mvn -B -DskipTests clean package'
 				}
             }
         }
-        stage('Ejecucion de pruebas unitarias e integracion') {
+        stage('Ejecución de pruebas unitarias e integración') {
             steps {
 				withMaven(maven : 'maven-3.6.3'){
 					bat 'mvn test'
@@ -24,7 +24,7 @@ pipeline {
             }
         }
         
-        stage('SonarQube: Analisis de codigo estatico') {
+        stage('SonarQube: Análisis de codigo estático') {
             steps {
                 withSonarQubeEnv('sonar-server') {
 					withMaven(maven : 'maven-3.6.3'){
@@ -34,7 +34,7 @@ pipeline {
             }
         }
 		
-        stage('Nexus: Generacion de artefacto') {
+        stage('Nexus: Generación de artefacto') {
             steps {
 				withMaven(maven : 'maven-3.6.3'){
 					bat 'mvn clean deploy -P release'
