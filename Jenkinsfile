@@ -39,6 +39,14 @@ pipeline {
 					bat 'mvn clean deploy -P release'
 				}
             }
+			post {
+				success {
+					sshagent(['github-ssh']) {
+						bat "git checkout master"
+						bat "git merge dev"
+					}
+				}
+			}	
         }
     }
 }
