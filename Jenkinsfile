@@ -39,13 +39,6 @@ pipeline {
 					bat 'mvn clean deploy -P release'
 				}
             }
-			post {
-				success {
-					sshagent(['github-ssh']) {
-						sh "git push origin master"          
-					}
-				}
-			}	
         }
     }
 }
