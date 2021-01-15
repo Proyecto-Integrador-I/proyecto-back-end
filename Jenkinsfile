@@ -42,6 +42,7 @@ pipeline {
 			post {
 				success {
 					sshagent(['github-ssh']) {
+						bat "git fetch --all"
 						bat "git checkout master"
 						bat "git merge dev"
 					}
