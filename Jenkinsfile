@@ -33,21 +33,23 @@ pipeline {
                 }
             }
         }
+		
         stage('Nexus: Generacion de artefacto') {
             steps {
 				withMaven(maven : 'maven-3.6.3'){
 					bat 'mvn clean deploy -P release'
 				}
             }
-			post {
-				success {
-					sshagent(['github-ssh']) {
-						bat "git fetch --all"
-						bat "git checkout master"
-						bat "git merge dev"
-					}
-				}
-			}	
         }
+		
+		stage('Despliegue'){
+			when {
+				branch 'master'
+			}
+			steps {
+				deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://localhost:8082/')], contextPath: registro-api, war: '**/*.war'
+			}
+		}
+		
     }
 }
