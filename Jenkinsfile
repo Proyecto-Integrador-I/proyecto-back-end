@@ -44,7 +44,7 @@ pipeline {
 		
 		stage('Despliegue'){
 			steps {
-				deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://localhost:8082/')], contextPath: registro-api, war: '**/*.war'
+				deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://localhost:8082/')], contextPath: 'registro-api', war: '**/*.war'
 			}
 		}
 		
